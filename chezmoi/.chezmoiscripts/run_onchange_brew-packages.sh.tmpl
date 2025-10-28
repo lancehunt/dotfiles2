@@ -1,8 +1,10 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
-brew bundle --file=/dev/stdin <<EOF
-brew "git"
-cask "google-chrome"
-EOF
+# Run brew bundle to install/update packages from the Brewfile.
+# i.e. brew bundle dump --force --file="$(chezmoi source-path)/Brewfile"
+# The --no-upgrade flag prevents automatic upgrades. For upgrades,
+# you can run brew bundle --file="$(chezmoi source-path)/Brewfile"
+# manually.
+brew bundle --no-upgrade --file="$(chezmoi source-path)/Brewfile"
 {{ end -}}
