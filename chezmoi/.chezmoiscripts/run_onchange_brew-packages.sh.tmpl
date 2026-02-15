@@ -2,9 +2,9 @@
 #!/bin/bash
 
 # Run brew bundle to install/update packages from the Brewfile.
-# i.e. brew bundle dump --force --file="$(chezmoi source-path)/Brewfile"
+# i.e. brew bundle dump --force --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
 # The --no-upgrade flag prevents automatic upgrades. For upgrades,
-# you can run brew bundle --file="$(chezmoi source-path)/Brewfile"
+# you can run brew bundle --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
 # manually.
-brew bundle --no-upgrade --file="$(chezmoi source-path)/Brewfile"
+brew bundle --no-upgrade --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
 {{ end -}}
