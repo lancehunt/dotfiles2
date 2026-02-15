@@ -173,7 +173,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # pipx completion (must come after conda init since register-python-argcomplete is in conda bin)
-if command -v pipx &>/dev/null; then
+if command -v pipx &>/dev/null && command -v register-python-argcomplete &>/dev/null; then
   eval "$(register-python-argcomplete pipx)"
 fi
 
@@ -197,7 +197,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-. "$HOME/.local/share/../bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # Amp CLI
 export PATH="/Users/lhunt/.amp/bin:$PATH"
