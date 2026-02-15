@@ -6,5 +6,10 @@
 # The --no-upgrade flag prevents automatic upgrades. For upgrades,
 # you can run brew bundle --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
 # manually.
+# Initialize rustup toolchain if freshly installed (needed for cargo entries)
+if command -v rustup &>/dev/null && ! rustup show active-toolchain &>/dev/null 2>&1; then
+  rustup-init -y --no-modify-path
+fi
+
 brew bundle --no-upgrade --file="${CHEZMOI_SOURCE_DIR}/Brewfile" || echo "brew bundle completed with errors (some mas apps may need manual install)"
 {{ end -}}
