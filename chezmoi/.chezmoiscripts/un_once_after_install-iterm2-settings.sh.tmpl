@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# iTerm2 Settings Automation
+# This script points iTerm2 to your tracked config folder
+
+# 1. Define the path to your managed iTerm2 folder
+ITERM2_CONFIG_DIR="$HOME/.config/iterm2"
+
+# 2. Tell iTerm2 to look for preferences in that custom folder
+defaults write com.googlecode.iterm2 "PrefsCustomFolder" -string "$ITERM2_CONFIG_DIR"
+
+# 3. Enable the "Load preferences from custom folder" setting
+defaults write com.googlecode.iterm2 "LoadPrefsFromCustomFolder" -bool true
+
+echo "✅ iTerm2 configured to load settings from $ITERM2_CONFIG_DIR"
+

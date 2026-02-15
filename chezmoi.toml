@@ -1,0 +1,4 @@
+[hooks.add.pre]
+    command = "sh"
+    args = ["-c", "if [ \"$(basename \"$CHEZMOI_SOURCE_FILE\")\" = \"com.googlecode.iterm2.plist\" ]; then plutil -convert xml1 \"$CHEZMOI_SOURCE_FILE\"; fi"]
+

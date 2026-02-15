@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.chezmoi.io)",
+      "Bash(git show:*)",
+      "Bash(xxd:*)",
+      "Bash(chezmoi:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
+    ]
+  }
+}
