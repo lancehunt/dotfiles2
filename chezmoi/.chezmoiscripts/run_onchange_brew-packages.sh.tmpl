@@ -6,5 +6,5 @@
 # The --no-upgrade flag prevents automatic upgrades. For upgrades,
 # you can run brew bundle --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
 # manually.
-brew bundle --no-upgrade --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
+brew bundle --no-upgrade --file="${CHEZMOI_SOURCE_DIR}/Brewfile" || echo "brew bundle completed with errors (some mas apps may need manual install)"
 {{ end -}}
