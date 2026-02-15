@@ -184,3 +184,74 @@ genrand() {
 tabname() {
     echo -ne "\033]0;${1}\007"
 }
+
+# Add or update a secret in keychain
+secret-set() {
+  if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: secret-set <name> <value>"
+    echo "Example: secret-set openai_api_key sk-..."
+    return 1
+  fi
+  security add-generic-password -a "${USER}" -s "$1" -w "$2" -U
+  echo "✓ Secret '$1' stored in keychain"
+}
+
+# Retrieve a secret from keychain
+secret-get() {
+  if [ -z "$1" ]; then
+    echo "Usage: secret-get <name>"
+    echo "Example: secret-get openai_api_key"
+    return 1
+  fi
+  security find-generic-password -a "${USER}" -s "$1" -w 2>/dev/null
+}
+
+# Delete a secret from keychain
+secret-delete() {
+  if [ -z "$1" ]; then
+    echo "Usage: secret-delete <name>"
+    echo "Example: secret-delete openai_api_key"
+    return 1
+  fi
+  security delete-generic-password -a "${USER}" -s "$1"
+  echo "✓ Secret '$1' deleted from keychain"
+}
+
+# Export a secret as an environment variable
+secret-export() {
+  if [ -z "$1" ]; then
+    echo "Usage: secret-export <name> [env_var_name]"
+    echo "Example: secret-export openai_api_key OPENAI_API_KEY"
+    return 1
+  fi
+  local secret_name="$1"
+  local env_var="${2:-$(echo $1 | tr '[:lower:]' '[:upper:]')}"
+  local value=$(secret-get "$secret_name")
+
+  if [ -n "$value" ]; then
+    export "$env_var"="$value"
+#    echo "✓ Exported $env_var"
+  else
+    echo "✗ Secret '$secret_name' not found"
+    return 1
+  fi
+}
+
+# USAGE:
+# Store secrets
+# secret-set openai_api_key "sk-proj-abc123..."
+# secret-set github_token "ghp_xyz789..."
+# secret-set anthropic_api_key "sk-ant-..."
+
+# Retrieve secrets
+# secret-get openai_api_key
+
+# Use in commands
+# curl -H "Authorization: Bearer $(secret-get github_token)" https://api.github.com/user
+
+# Export to environment variable
+# secret-export openai_api_key OPENAI_API_KEY
+# secret-export github_token  # Auto-exports as GITHUB_TOKEN
+
+# Delete secrets
+# secret-delete old_api_key

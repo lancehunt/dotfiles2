@@ -3,3 +3,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 PATH="$(bash --norc -ec 'IFS=:; paths=($PATH); for i in ${!paths[@]}; do if [[ ${paths[i]} == "'~/.pyenv/shims'" ]]; then unset '\''paths[i]'\''; fi; done; echo "${paths[*]}"')"
 export PATH="~/.pyenv/shims:${PATH}"
 command pyenv rehash 2>/dev/null
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :

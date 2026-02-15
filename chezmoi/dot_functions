@@ -2,3 +2,66 @@
 function yaml2json() {
 	python -c 'import json, sys, yaml ; y = yaml.safe_load(sys.stdin.read()) ; print(json.dumps(y))'
 }
+
+# Update Claude Code credentials from aws-vault
+function update-claude-credentials() {
+    local SETTINGS_FILE="$HOME/Library/Application Support/Code/User/settings.json"
+
+    echo "🔐 Getting credentials from aws-vault..."
+
+    # Get credentials from aws-vault
+    local CREDS=$(aws-vault exec claude -- env | grep '^AWS_')
+
+    if [ -z "$CREDS" ]; then
+        echo "❌ Failed to get credentials from aws-vault"
+        return 1
+    fi
+
+    # Extract individual values
+    local AWS_ACCESS_KEY_ID=$(echo "$CREDS" | grep '^AWS_ACCESS_KEY_ID=' | cut -d'=' -f2)
+    local AWS_SECRET_ACCESS_KEY=$(echo "$CREDS" | grep '^AWS_SECRET_ACCESS_KEY=' | cut -d'=' -f2)
+    local AWS_SESSION_TOKEN=$(echo "$CREDS" | grep '^AWS_SESSION_TOKEN=' | cut -d'=' -f2)
+
+    if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_SESSION_TOKEN" ]; then
+        echo "❌ Failed to extract all required credentials"
+        return 1
+    fi
+
+    echo "✓ Credentials retrieved"
+    echo "📝 Updating VSCode settings..."
+
+    # Backup the settings file
+    cp "$SETTINGS_FILE" "$SETTINGS_FILE.backup.$(date +%Y%m%d_%H%M%S)"
+
+    # Update the settings file using jq
+    jq --arg access_key "$AWS_ACCESS_KEY_ID" \
+       --arg secret_key "$AWS_SECRET_ACCESS_KEY" \
+       --arg session_token "$AWS_SESSION_TOKEN" \
+       '.["claudeCode.environmentVariables"] |= map(
+          if .name == "AWS_ACCESS_KEY_ID" then .value = $access_key
+          elif .name == "AWS_SECRET_ACCESS_KEY" then .value = $secret_key
+          elif .name == "AWS_SESSION_TOKEN" then .value = $session_token
+          else . end
+       )' \
+       "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+
+    if [ $? -eq 0 ]; then
+        echo "✅ VSCode settings updated successfully!"
+
+        # Check if we should auto-reload VSCode
+        if [[ "$1" == "--reload" ]] || [[ "$1" == "-r" ]]; then
+            echo "🔄 Reloading VSCode window..."
+            if command -v code &>/dev/null; then
+                code --reuse-window --command workbench.action.reloadWindow 2>/dev/null || \
+                osascript -e 'tell application "System Events" to tell process "Code" to keystroke "r" using {command down}'
+            else
+                echo "⚠️  VSCode CLI not found, reload manually with Cmd+R"
+            fi
+        else
+            echo "💡 Run with --reload flag to auto-reload VSCode, or reload manually with Cmd+R"
+        fi
+    else
+        echo "❌ Failed to update settings"
+        return 1
+    fi
+}

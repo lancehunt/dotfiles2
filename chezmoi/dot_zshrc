@@ -127,10 +127,6 @@ if command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"; then
   eval "$(pyenv init -)"
 fi
 
-if command -v pipx &>/dev/null; then
-  eval "$(register-python-argcomplete pipx)"
-fi
-
 if command -v pipenv &>/dev/null; then
   # Tell pipenv to create virtual environments inside the project directory
   export PIPENV_VENV_IN_PROJECT=1
@@ -176,6 +172,11 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# pipx completion (must come after conda init since register-python-argcomplete is in conda bin)
+if command -v pipx &>/dev/null; then
+  eval "$(register-python-argcomplete pipx)"
+fi
+
 eval "$(~/.local/bin/mise activate zsh)"
 
 # docker
@@ -197,3 +198,9 @@ esac
 # pnpm end
 
 . "$HOME/.local/share/../bin/env"
+
+# Amp CLI
+export PATH="/Users/lhunt/.amp/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/lhunt/.antigravity/antigravity/bin:$PATH"
