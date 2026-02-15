@@ -42,10 +42,10 @@ if command -v zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# EXA is a better ls written in rust: https://the.exa.website/
-if command -v exa &>/dev/null; then
-  alias ls='exa --git --group-directories-first --group --time-style=long-iso --icons'
-  export EXA_ICON_SPACING=2
+# EZA is a better ls written in rust (maintained fork of exa): https://eza.rocks
+if command -v eza &>/dev/null; then
+  alias ls='eza --git --group-directories-first --group --time-style=long-iso --icons'
+  export EZA_ICON_SPACING=2
 fi
 
 ##############################################################################
