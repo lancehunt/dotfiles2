@@ -52,7 +52,6 @@ brew "localstack"
 brew "mas"
 brew "miller"
 brew "python@3.11"
-brew "mitmproxy"
 brew "moor"
 brew "nvm"
 brew "openvpn"
@@ -98,7 +97,6 @@ cask "google-drive"
 cask "iterm2"
 cask "joplin"
 cask "mactex"
-cask "mitmproxy"
 cask "ngrok"
 cask "orbstack"
 cask "postman"
@@ -108,14 +106,6 @@ cask "slack"
 cask "spotify"
 cask "visual-studio-code"
 cask "zoom"
-mas "Bitwarden", id: 1352778147
-mas "Copilot", id: 6738511300
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Microsoft Outlook", id: 985367838
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
 mas "Trello", id: 1278508951
 mas "Xcode", id: 497799835
 vscode "anthropic.claude-code"
@@ -167,8 +157,6 @@ go "github.com/jstemmer/gotags"
 go "golang.org/x/tools/cmd/guru"
 go "github.com/koron/iferr"
 go "github.com/josharian/impl"
-go "honnef.co/go/tools/cmd/keyify"
-go "github.com/grafana/mcp-grafana/cmd/mcp-grafana"
 go "github.com/fatih/motion"
 go "github.com/justjanne/powerline-go"
 go "github.com/mgechev/revive"
