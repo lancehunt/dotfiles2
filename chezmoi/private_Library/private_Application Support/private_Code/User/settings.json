@@ -1,0 +1,42 @@
+{
+  "editor.inlineSuggest.enabled": true,
+  "git.openRepositoryInParentFolders": "never",
+  "window.zoomLevel": 1.5,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.preferredAccount": "lhunt2",
+  "makefile.configureOnOpen": false,
+  "explorer.confirmDelete": false,
+  "geminicodeassist.project": "",
+  "vxplain.enableAnalytics": false,
+  "vxplain.enableExtensionAutoStart": false,
+  "geminicodeassist.customCommands": {
+    "revise-text": "revise the text file to apply the requested changes while staying faithful overall to the original text unless explicitly told otherwise"
+  },
+  "editor.renderWhitespace": "all",
+  "git.autofetch": true,
+  "vxplain.enableAiFeatures": false,
+  "explorer.confirmDragAndDrop": false,
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.13",
+  "aws.telemetry": false,
+  "typescript.tsserver.watchOptions": "vscode",
+  "terminal.external.osxExec": "iTerm.app",
+  "workbench.activityBar.location": "top",
+  "workbench.statusBar.visible": false,
+  "workbench.colorTheme": "Tokyo Night AltSynt",
+  "workbench.sideBar.location": "right",
+  "editor.minimap.enabled": false,
+  "diffEditor.renderSideBySide": false,
+  "[python]": {
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "git.blame.editorDecoration.enabled": true,
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.initialPermissionMode": "plan",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.languageServerMode": "light"
+}
