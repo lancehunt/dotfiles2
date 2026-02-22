@@ -38,5 +38,6 @@
   "claudeCode.preferredLocation": "sidebar",
   "claudeCode.initialPermissionMode": "plan",
   "python.analysis.autoImportCompletions": true,
-  "python.analysis.languageServerMode": "light"
+  "python.analysis.languageServerMode": "light",
+  "workbench.preferredDarkColorTheme": "Tokyo Night AltSynt"
 }

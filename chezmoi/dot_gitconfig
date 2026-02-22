@@ -183,7 +183,7 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 [mergetool]
 	keepBackup = false
 [init]
-	templateDir = ~/.git-templates/git-secrets
+	templatedir = /Users/lhunt/.git-templates
 	defaultBranch = main
 [user]
 	name = Lance Hunt

@@ -1,3 +1,4 @@
 [tools]
 node = "20.20.0"
+"npm:ctx7" = "latest"
 python = "3.14.3"
