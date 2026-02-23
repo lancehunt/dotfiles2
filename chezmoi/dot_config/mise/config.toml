@@ -1,4 +1,6 @@
 [tools]
 node = "20.20.0"
+"npm:@sentry/cli" = "latest"
 "npm:ctx7" = "latest"
+"npm:yarn" = "latest"
 python = "3.14.3"
