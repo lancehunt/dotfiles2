@@ -25,4 +25,4 @@ This will install chezmoi and apply all dotfiles in one step, including setup sc
 | `chezmoi edit <file>` | Edit a managed file |
 | `chezmoi re-add` | Re-add all managed files that have changed since last update |
 | `mise use -g npm:{package}@latest` | Install a global npm package via mise (tracked by this repo) |
-| `brew bundle --file=chezmoi/Brewfile --no-upgrade` | Install Homebrew packages |
+| `brew bundle dump --global --force && chezmoi add ~/.Brewfile` | Update Brewfile from currently installed packages |

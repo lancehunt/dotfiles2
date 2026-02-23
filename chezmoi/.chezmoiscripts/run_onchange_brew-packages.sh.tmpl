@@ -5,15 +5,14 @@
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Run brew bundle to install/update packages from the Brewfile.
-# i.e. brew bundle dump --force --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
+# Run brew bundle to install/update packages from ~/.Brewfile (global).
+# To update: brew bundle dump --global --force && chezmoi add ~/.Brewfile
 # The --no-upgrade flag prevents automatic upgrades. For upgrades,
-# you can run brew bundle --file="${CHEZMOI_SOURCE_DIR}/Brewfile"
-# manually.
+# run brew bundle --global manually.
 # Initialize rustup toolchain if freshly installed (needed for cargo entries)
 if command -v rustup &>/dev/null && ! rustup show active-toolchain &>/dev/null 2>&1; then
   rustup-init -y --no-modify-path
 fi
 
-brew bundle --no-upgrade --file="${CHEZMOI_SOURCE_DIR}/Brewfile" || echo "brew bundle completed with errors (some mas apps may need manual install)"
+brew bundle --global --no-upgrade || echo "brew bundle completed with errors (some mas apps may need manual install)"
 {{ end -}}
