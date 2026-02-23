@@ -1,7 +1,6 @@
 #!/bin/bash
 set -eufo pipefail
 
-{{- if eq .chezmoi.os "darwin" }}
 echo "🍏  Setting macOS defaults"
 
 osascript -e 'tell application "System Preferences" to quit'
@@ -73,6 +72,14 @@ echo "📁  Set Finder icons size"
 echo "📁  Set Finder preferred view style to icon"
 defaults write com.apple.finder FXPreferredViewStyle -string "icnv"
 
+# Screenshots
+
+echo "📸  Set screenshot save location"
+mkdir -p ~/Desktop/screenshots
+defaults write com.apple.screencapture location ~/Desktop/screenshots/
+
+# Login items
+
 echo "📱  Set 'Open at login' applications"
 
 loginItems=(
@@ -88,5 +95,3 @@ for app in "${loginItems[@]}"; do
     echo "❌  $app not found in /Applications"
   fi
 done
-
-{{ end -}}
