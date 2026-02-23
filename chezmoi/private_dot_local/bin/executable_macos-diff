@@ -50,7 +50,7 @@ for domain in "${DOMAINS[@]}"; do
     continue
   fi
 
-  diff_output=$(diff "${before:-/dev/null}" "${after:-/dev/null}")
+  diff_output=$(diff -u "${before:-/dev/null}" "${after:-/dev/null}")
   if [ -n "$diff_output" ]; then
     echo "=== $domain ==="
     echo "$diff_output"
