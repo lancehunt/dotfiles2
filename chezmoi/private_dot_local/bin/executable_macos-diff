@@ -1,0 +1,19 @@
+#!/bin/bash
+# Diff current macOS defaults against the last macos-snapshot
+
+SNAPSHOT_FILE="${TMPDIR:-/tmp}/macos-defaults-snapshot.txt"
+
+if [ ! -f "$SNAPSHOT_FILE" ]; then
+  echo "No snapshot found. Run macos-snapshot first."
+  exit 1
+fi
+
+CURRENT_FILE="${TMPDIR:-/tmp}/macos-defaults-current.txt"
+
+echo "Reading current defaults..."
+defaults domains | tr ',' '\n' | tr -d ' ' | sort | while read -r domain; do
+  echo "=== $domain ==="
+  defaults read "$domain" 2>/dev/null
+done > "$CURRENT_FILE"
+
+diff "$SNAPSHOT_FILE" "$CURRENT_FILE"

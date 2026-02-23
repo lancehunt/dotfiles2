@@ -1,0 +1,13 @@
+#!/bin/bash
+# Snapshot all macOS defaults to a temp file for later diffing with macos-diff
+
+SNAPSHOT_FILE="${TMPDIR:-/tmp}/macos-defaults-snapshot.txt"
+
+echo "Taking snapshot of all macOS defaults..."
+defaults domains | tr ',' '\n' | tr -d ' ' | sort | while read -r domain; do
+  echo "=== $domain ==="
+  defaults read "$domain" 2>/dev/null
+done > "$SNAPSHOT_FILE"
+
+echo "Snapshot saved to $SNAPSHOT_FILE"
+echo "Make your changes in System Settings, then run macos-diff"
