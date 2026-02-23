@@ -41,6 +41,7 @@ found_changes=false
 
 for domain in "${DOMAINS[@]}"; do
   defaults export "$domain" "$CURRENT_DIR/$domain.plist" 2>/dev/null || true
+  [ -f "$CURRENT_DIR/$domain.plist" ] && plutil -convert xml1 "$CURRENT_DIR/$domain.plist"
 
   before="$SNAPSHOT_DIR/$domain.plist"
   after="$CURRENT_DIR/$domain.plist"

@@ -22,6 +22,7 @@ DOMAINS=(
 
 for domain in "${DOMAINS[@]}"; do
   defaults export "$domain" "$SNAPSHOT_DIR/$domain.plist" 2>/dev/null || true
+  [ -f "$SNAPSHOT_DIR/$domain.plist" ] && plutil -convert xml1 "$SNAPSHOT_DIR/$domain.plist"
 done
 
 echo "Snapshot saved to $SNAPSHOT_DIR"
