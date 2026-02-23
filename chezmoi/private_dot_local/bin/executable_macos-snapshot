@@ -1,13 +1,28 @@
 #!/bin/bash
-# Snapshot all macOS defaults to a temp file for later diffing with macos-diff
+# Snapshot macOS defaults for tracked domains. Run before making changes,
+# then use macos-diff to see what changed.
 
-SNAPSHOT_FILE="${TMPDIR:-/tmp}/macos-defaults-snapshot.txt"
+SNAPSHOT_DIR="${TMPDIR:-/tmp}/macos-defaults-snapshot"
+mkdir -p "$SNAPSHOT_DIR"
 
-echo "Taking snapshot of all macOS defaults..."
-defaults domains | tr ',' '\n' | tr -d ' ' | sort | while read -r domain; do
-  echo "=== $domain ==="
-  defaults read "$domain" 2>/dev/null
-done > "$SNAPSHOT_FILE"
+DOMAINS=(
+  "NSGlobalDomain"
+  "com.apple.dock"
+  "com.apple.finder"
+  "com.apple.screencapture"
+  "com.apple.HIToolbox"
+  "com.apple.driver.AppleBluetoothMultitouch.trackpad"
+  "com.apple.AppleMultitouchTrackpad"
+  "com.apple.universalaccess"
+  "com.apple.controlcenter"
+  "com.apple.menuextra.clock"
+  "com.apple.systempreferences"
+  "com.apple.loginwindow"
+)
 
-echo "Snapshot saved to $SNAPSHOT_FILE"
+for domain in "${DOMAINS[@]}"; do
+  defaults export "$domain" "$SNAPSHOT_DIR/$domain.plist" 2>/dev/null || true
+done
+
+echo "Snapshot saved to $SNAPSHOT_DIR"
 echo "Make your changes in System Settings, then run macos-diff"

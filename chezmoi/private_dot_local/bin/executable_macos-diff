@@ -1,19 +1,63 @@
 #!/bin/bash
-# Diff current macOS defaults against the last macos-snapshot
+# Diff current macOS defaults against the last macos-snapshot.
+# Output shows domain, key, type, and value — everything needed to write
+# a defaults write command:
+#   defaults write <domain> <key> -<type> <value>
+#
+# Type reference:
+#   <true/> / <false/>     → -bool true / -bool false
+#   <integer>N</integer>   → -int N
+#   <real>N</real>         → -float N
+#   <string>s</string>     → -string "s"
+#   <array>...</array>     → -array ...
+#   <dict>...</dict>       → -dict-add ...
 
-SNAPSHOT_FILE="${TMPDIR:-/tmp}/macos-defaults-snapshot.txt"
+SNAPSHOT_DIR="${TMPDIR:-/tmp}/macos-defaults-snapshot"
 
-if [ ! -f "$SNAPSHOT_FILE" ]; then
+if [ ! -d "$SNAPSHOT_DIR" ]; then
   echo "No snapshot found. Run macos-snapshot first."
   exit 1
 fi
 
-CURRENT_FILE="${TMPDIR:-/tmp}/macos-defaults-current.txt"
+DOMAINS=(
+  "NSGlobalDomain"
+  "com.apple.dock"
+  "com.apple.finder"
+  "com.apple.screencapture"
+  "com.apple.HIToolbox"
+  "com.apple.driver.AppleBluetoothMultitouch.trackpad"
+  "com.apple.AppleMultitouchTrackpad"
+  "com.apple.universalaccess"
+  "com.apple.controlcenter"
+  "com.apple.menuextra.clock"
+  "com.apple.systempreferences"
+  "com.apple.loginwindow"
+)
 
-echo "Reading current defaults..."
-defaults domains | tr ',' '\n' | tr -d ' ' | sort | while read -r domain; do
-  echo "=== $domain ==="
-  defaults read "$domain" 2>/dev/null
-done > "$CURRENT_FILE"
+CURRENT_DIR="${TMPDIR:-/tmp}/macos-defaults-current"
+mkdir -p "$CURRENT_DIR"
 
-diff "$SNAPSHOT_FILE" "$CURRENT_FILE"
+found_changes=false
+
+for domain in "${DOMAINS[@]}"; do
+  defaults export "$domain" "$CURRENT_DIR/$domain.plist" 2>/dev/null || true
+
+  before="$SNAPSHOT_DIR/$domain.plist"
+  after="$CURRENT_DIR/$domain.plist"
+
+  if [ ! -f "$before" ] && [ ! -f "$after" ]; then
+    continue
+  fi
+
+  diff_output=$(diff "${before:-/dev/null}" "${after:-/dev/null}")
+  if [ -n "$diff_output" ]; then
+    echo "=== $domain ==="
+    echo "$diff_output"
+    echo ""
+    found_changes=true
+  fi
+done
+
+if [ "$found_changes" = false ]; then
+  echo "No changes detected."
+fi
