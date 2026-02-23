@@ -5,7 +5,7 @@ Personal macOS dotfiles managed with [chezmoi](https://www.chezmoi.io/).
 ## Bootstrap a new machine
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lancehunt
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lancehunt/dotfiles2
 ```
 
 This will install chezmoi and apply all dotfiles in one step, including setup scripts for mise, Homebrew packages, Vundle, iTerm2 settings, and macOS system preferences.
