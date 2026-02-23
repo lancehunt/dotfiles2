@@ -1,5 +1,5 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
-# dot_macos hash: {{ include (joinPath .chezmoi.sourceDir "dot_macos") | sha256sum }}
+# dot_macos hash: {{ include (joinPath .chezmoi.sourceDir "executable_dot_macos") | sha256sum }}
 ~/.macos
 {{ end -}}
