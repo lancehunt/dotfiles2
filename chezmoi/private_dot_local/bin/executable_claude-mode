@@ -1,0 +1,41 @@
+#!/usr/bin/env zsh
+
+MODE_FILE="$HOME/.claude-mode"
+
+usage() {
+    echo "Usage: claude-mode [bedrock|sub]"
+    echo ""
+    echo "  bedrock  - Use Claude via AWS Bedrock (default)"
+    echo "  sub      - Use Claude via Anthropic subscription"
+    echo ""
+    echo "Current mode: $(current_mode)"
+    echo ""
+    echo "Run 'exec zsh' or open a new shell after switching."
+}
+
+current_mode() {
+    if [ -f "$MODE_FILE" ] && [ "$(cat "$MODE_FILE")" = "sub" ]; then
+        echo "sub"
+    else
+        echo "bedrock"
+    fi
+}
+
+case "$1" in
+    bedrock)
+        echo "bedrock" > "$MODE_FILE"
+        echo "Switched to Bedrock mode. Open a new shell or run: exec zsh"
+        ;;
+    sub)
+        echo "sub" > "$MODE_FILE"
+        echo "Switched to Subscription mode. Open a new shell or run: exec zsh"
+        ;;
+    "")
+        usage
+        ;;
+    *)
+        echo "Unknown mode: $1"
+        usage
+        exit 1
+        ;;
+esac

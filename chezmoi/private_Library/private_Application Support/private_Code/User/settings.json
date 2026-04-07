@@ -26,7 +26,6 @@
   "typescript.tsserver.watchOptions": "vscode",
   "terminal.external.osxExec": "iTerm.app",
   "workbench.activityBar.location": "top",
-  "workbench.statusBar.visible": false,
   "workbench.colorTheme": "Tokyo Night AltSynt",
   "workbench.sideBar.location": "right",
   "editor.minimap.enabled": false,
@@ -39,5 +38,7 @@
   "claudeCode.initialPermissionMode": "plan",
   "python.analysis.autoImportCompletions": true,
   "python.analysis.languageServerMode": "light",
-  "workbench.preferredDarkColorTheme": "Tokyo Night AltSynt"
+  "workbench.preferredDarkColorTheme": "Tokyo Night AltSynt",
+  "http.systemCertificatesNode": true,
+  "security.workspace.trust.untrustedFiles": "open"
 }

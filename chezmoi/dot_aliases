@@ -145,8 +145,8 @@ dog() {
   cat $1
 }
 alias cat="bat"
-alias more="moar"
-alias less="moar"
+alias more="moor"
+alias less="moor"
 alias lesss="less"
 
 alias ll='ls -lG'

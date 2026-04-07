@@ -188,3 +188,9 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 [user]
 	name = Lance Hunt
 	email = lhunt@finetunelearning.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
