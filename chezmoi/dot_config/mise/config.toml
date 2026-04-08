@@ -4,12 +4,6 @@ node = "20.20.0"
 "npm:@sentry/cli" = "latest"
 "npm:ctx7" = "latest"
 "npm:yarn" = "latest"
-<<<<<<< HEAD
-python = "3.13"
-||||||| parent of 43c785f (Updated settings updated at some point)
-python = "3.14.3"
-=======
 python = "3.13"
 uv = "latest"
 zellij = "latest"
->>>>>>> 43c785f (Updated settings updated at some point)
