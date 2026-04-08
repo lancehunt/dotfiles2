@@ -21,7 +21,7 @@
   "git.autofetch": true,
   "vxplain.enableAiFeatures": false,
   "explorer.confirmDragAndDrop": false,
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.13",
+  "python.defaultInterpreterPath": "/Users/master/.local/share/mise/installs/python/3.13.9/bin/python",
   "aws.telemetry": false,
   "typescript.tsserver.watchOptions": "vscode",
   "terminal.external.osxExec": "iTerm.app",

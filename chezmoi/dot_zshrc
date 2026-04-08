@@ -205,11 +205,19 @@ esac
 
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
+<<<<<<< HEAD
 # Amp CLI
 export PATH="$HOME/.amp/bin:$PATH"
 
 <<<<<<< HEAD
+||||||| parent of 23ee38b (Updates since last sync)
+# Amp CLI
+export PATH="$HOME/.amp/bin:$PATH"
+
+=======
+>>>>>>> 23ee38b (Updates since last sync)
 # PATH exports
+<<<<<<< HEAD
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 ||||||| parent of 43c785f (Updated settings updated at some point)
 # Added by Antigravity
@@ -218,6 +226,10 @@ export PATH="/Users/lhunt/.antigravity/antigravity/bin:$PATH"
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 >>>>>>> 43c785f (Updated settings updated at some point)
+||||||| parent of 23ee38b (Updates since last sync)
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+=======
+>>>>>>> 23ee38b (Updates since last sync)
 export PATH="$HOME/.ai-squad/scripts:$PATH"
 <<<<<<< HEAD
 export PATH="$HOME/.cache/.bun/bin:$PATH"
