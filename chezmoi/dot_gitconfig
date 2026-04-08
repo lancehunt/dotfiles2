@@ -187,16 +187,10 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 	defaultBranch = main
 [user]
 	name = Lance Hunt
-<<<<<<< HEAD
-	email = lhunt@finetunelearning.com
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
-||||||| parent of 23ee38b (Updates since last sync)
-	email = lhunt@finetunelearning.com
-=======
 	email = lancehunt@gmail.com
->>>>>>> 23ee38b (Updates since last sync)
