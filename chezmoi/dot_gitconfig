@@ -187,6 +187,7 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 	defaultBranch = main
 [user]
 	name = Lance Hunt
+	email = lancehunt@gmail.com
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential

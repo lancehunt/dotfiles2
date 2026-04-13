@@ -185,6 +185,8 @@ tabname() {
     echo -ne "\033]0;${1}\007"
 }
 
+alias ctags="$(brew --prefix)/bin/ctags"
+
 # Add or update a secret in keychain
 secret-set() {
   if [ -z "$1" ] || [ -z "$2" ]; then
