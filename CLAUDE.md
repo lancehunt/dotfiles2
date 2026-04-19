@@ -15,6 +15,17 @@ Personal macOS dotfiles managed with [Chezmoi](https://www.chezmoi.io/). Managed
 - **Install brew packages:** `brew bundle --file=chezmoi/Brewfile --no-upgrade`
 - **Run pre-commit hooks:** `pre-commit run --all-files`
 
+## Capturing macOS Defaults Changes
+
+macOS system preferences are stored in `chezmoi/executable_dot_macos`. To capture changes made via System Settings:
+
+1. **Before** changing anything: `macos-snapshot` (snapshots all tracked domains to a temp dir)
+2. Make changes in System Settings
+3. **After**: `macos-diff` (shows what changed, with enough info to write `defaults write` commands)
+4. Add the relevant `defaults write` line(s) to `chezmoi/executable_dot_macos` under the appropriate section
+
+If you've already made changes without snapshotting first, check the current value with `defaults read <domain> <key>` and compare manually against `executable_dot_macos`.
+
 ## Conventions
 
 - `.tmpl` suffix = Go templates, macOS-only scripts guard with `{{ if eq .chezmoi.os "darwin" }}`
