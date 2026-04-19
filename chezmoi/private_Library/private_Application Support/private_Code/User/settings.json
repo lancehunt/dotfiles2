@@ -21,13 +21,11 @@
   "git.autofetch": true,
   "vxplain.enableAiFeatures": false,
   "explorer.confirmDragAndDrop": false,
-  "python.defaultInterpreterPath": "/Users/master/.local/share/mise/installs/python/3.13.9/bin/python",
+  "python.defaultInterpreterPath": "/Users/master/.local/share/mise/installs/python/3.13.13/bin/python",
   "aws.telemetry": false,
   "typescript.tsserver.watchOptions": "vscode",
   "terminal.external.osxExec": "iTerm.app",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Tokyo Night AltSynt",
-  "workbench.sideBar.location": "right",
   "editor.minimap.enabled": false,
   "diffEditor.renderSideBySide": false,
   "[python]": {
@@ -40,5 +38,6 @@
   "python.analysis.languageServerMode": "light",
   "workbench.preferredDarkColorTheme": "Tokyo Night AltSynt",
   "http.systemCertificatesNode": true,
-  "security.workspace.trust.untrustedFiles": "open"
+  "security.workspace.trust.untrustedFiles": "open",
+  "workbench.sideBar.location": "right"
 }

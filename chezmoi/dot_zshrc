@@ -204,3 +204,6 @@ export PATH="$HOME/.cache/.bun/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export PATH="$PATH:$(go env GOPATH)/bin"
+
+# Granted - AWS credential manager
+alias assume="source /opt/homebrew/bin/assume"

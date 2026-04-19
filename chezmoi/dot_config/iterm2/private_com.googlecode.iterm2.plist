@@ -510,7 +510,7 @@
 			<key>Disable Window Resizing</key>
 			<true/>
 			<key>Flashing Bell</key>
-			<false/>
+			<true/>
 			<key>Foreground Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -586,7 +586,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>10000</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -615,6 +615,8 @@
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
+			<key>Send Idle Alert</key>
+			<true/>
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>
@@ -699,6 +701,8 @@
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>1</integer>
 	<key>TabsHaveCloseButton</key>
+	<true/>
+	<key>TmuxUnpauseAutomatically</key>
 	<true/>
 	<key>UIElementRequiresHotkeys</key>
 	<true/>
