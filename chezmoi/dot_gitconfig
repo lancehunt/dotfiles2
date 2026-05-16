@@ -195,3 +195,10 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 	email = lancehunt@gmail.com
+[merge "json"]
+	driver = git-json-merge %A %O %B
+	name = custom merge driver for json files
+
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P

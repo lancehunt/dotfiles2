@@ -1,6 +1,6 @@
 [tools]
 "github:can1357/oh-my-pi" = "latest"
-node = "20.20.0"
+node = "24"
 "npm:@sentry/cli" = "latest"
 "npm:ctx7" = "latest"
 "npm:yarn" = "latest"
