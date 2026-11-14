@@ -43,3 +43,5 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 01:56 | all | CHANGELOG-linux-portability.md (new) | this changelog, per observer request 02:00 | uncommitted
 2026-11-14 01:56 | all | git | committed CHANGELOG-linux-portability.md (entries above marked uncommitted are in this commit) | fa7704b
 2026-11-14 01:56 | debian | ~/NOTE-to-observer.md | posted STATUS: DONE (round 1) | fa7704b
+2026-11-14 01:57 | all | .chezmoiscripts/run_before_05_os-packages.sh.tmpl | read .pkgmgr/.headless via (get . "key") so apply on a Mac whose config predates the template doesn't fail on a missing key; verified with an empty --config (darwin: whitespace-only, so skipped; linux: message) (observer review round 1) | 269c811
+2026-11-14 01:57 | all | PORTABILITY.md | added "Mac rollout" section (pull, chezmoi init, chezmoi diff, review, apply) (observer review round 1) | 269c811
