@@ -1,2 +1,10 @@
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# Linux: zsh doesn't read ~/.profile, so put ~/.local/bin and mise shims on PATH
+# for every zsh (incl. non-interactive `ssh host cmd`). Interactive shells then
+# run `mise activate` in .zshrc, which takes precedence over the shims.
+if [[ "$OSTYPE" == linux* ]]; then
+  typeset -U path
+  path=(~/.local/bin ~/.local/share/mise/shims $path)
+fi

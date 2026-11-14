@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal macOS dotfiles managed with [chezmoi](https://www.chezmoi.io/).
+Personal dotfiles for macOS and Debian/Linux (headless) managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Bootstrap a new machine
 
@@ -12,8 +12,13 @@ This will install chezmoi and apply all dotfiles in one step, including setup sc
 
 ### Prerequisites
 
-- macOS
+- macOS, or Debian/Ubuntu (headless is fine)
 - `curl`
+
+On Linux, packages come from apt (`run_onchange_before_05_apt-packages.sh.tmpl`, asks for sudo only
+when something is missing) plus the linux block of `dot_config/mise/config.toml.tmpl` instead of the
+Brewfile. macOS-only targets are skipped via `.chezmoiignore`. Deviations and rationale:
+[PORTABILITY.md](PORTABILITY.md).
 
 ## Day-to-day usage
 
@@ -27,5 +32,5 @@ This will install chezmoi and apply all dotfiles in one step, including setup sc
 | `macos-snapshot` | Snapshot current macOS defaults before making changes in System Settings |
 | `macos-diff` | Show what defaults changed since last snapshot |
 | `chezmoi re-add` | Re-add all managed files that have changed since last update |
-| `mise use -g npm:{package}@latest` | Install a global npm package via mise (tracked by this repo) |
+| `chezmoi edit ~/.config/mise/config.toml` | Add a mise tool (the config is a template, so `mise use -g` edits get overwritten on next apply) |
 | `brew bundle dump --global --force && chezmoi add ~/.Brewfile` | Update Brewfile from currently installed packages |

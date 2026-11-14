@@ -49,6 +49,7 @@ alias week='date +%V'
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
+if [[ "$OSTYPE" == darwin* ]]; then
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update --system; sudo gem update'
 
@@ -66,6 +67,19 @@ alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/La
 # View HTTP traffic
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+else
+# Linux equivalents. NOTE: `ip` is NOT aliased here - it would shadow iproute2's `ip`.
+alias update='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y; mise upgrade; chezmoi update'
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="hostname -I | awk '{print \$1}'"
+alias ips="command ip -br addr"
+alias flush="sudo resolvectl flush-caches 2>/dev/null && echo DNS cache flushed"
+alias httpdump="sudo tcpdump -i any -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# pbcopy over SSH: OSC 52 sets the *local* terminal's clipboard (iTerm2:
+# Settings > General > Selection > "Applications in terminal may access clipboard")
+pbcopy() { printf '\e]52;c;%s\a' "$(base64 | tr -d '\n')"; }
+fi
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
@@ -87,6 +101,7 @@ alias c="tr -d '\n' | pbcopy"
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
+if [[ "$OSTYPE" == darwin* ]]; then
 # Empty the Trash on all mounted volumes and the main HDD
 # Also, clear Apple’s System Logs to improve shell startup speed
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
@@ -99,8 +114,6 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-# URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Disable Spotlight
 alias spotoff="sudo mdutil -a -i off"
@@ -109,6 +122,10 @@ alias spoton="sudo mdutil -a -i on"
 
 # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
 alias plistbuddy="/usr/libexec/PlistBuddy"
+fi
+
+# URL-encode strings
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
 
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
@@ -127,6 +144,7 @@ done
 # Make Grunt print stack traces by default
 command -v grunt > /dev/null && alias grunt="grunt --stack"
 
+if [[ "$OSTYPE" == darwin* ]]; then
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
@@ -137,6 +155,7 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+fi
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
@@ -144,10 +163,12 @@ alias reload="exec $SHELL -l"
 dog() {
   cat $1
 }
-alias cat="bat"
-alias more="moor"
-alias less="moor"
-alias lesss="less"
+command -v bat &>/dev/null && alias cat="bat"
+if command -v moor &>/dev/null; then
+  alias more="moor"
+  alias less="moor"
+  alias lesss="command less"
+fi
 
 alias ll='ls -lG'
 alias lll='ls -lGhA'
@@ -166,7 +187,7 @@ gitp() {
 
 # Misc developer tooling
 alias swagger="docker run --rm -it -e GOPATH=$HOME/go:/go -v $HOME:$HOME -w $(pwd) quay.io/goswagger/swagger"
-alias minikube="minikube start --vm-driver hyperkit"
+[[ "$OSTYPE" == darwin* ]] && alias minikube="minikube start --vm-driver hyperkit"
 function __versionator {
 	exiftool "$1" | grep -i Version
 }
@@ -185,8 +206,9 @@ tabname() {
     echo -ne "\033]0;${1}\007"
 }
 
-alias ctags="$(brew --prefix)/bin/ctags"
+command -v brew &>/dev/null && alias ctags="$(brew --prefix)/bin/ctags"
 
+if [[ "$OSTYPE" == darwin* ]]; then
 # Add or update a secret in keychain
 secret-set() {
   if [ -z "$1" ] || [ -z "$2" ]; then
@@ -218,6 +240,35 @@ secret-delete() {
   security delete-generic-password -a "${USER}" -s "$1"
   echo "✓ Secret '$1' deleted from keychain"
 }
+
+else
+# Linux (headless, no keychain/D-Bus): same interface, backed by age-encrypted
+# files in ~/.local/share/secrets, identity at ~/.config/age/secrets.key (0600).
+# This guards against accidental leaks (grep, backups, sync) - it is not a vault.
+_secret_init() {
+  local key=~/.config/age/secrets.key
+  [ -f "$key" ] || { mkdir -p ~/.config/age && (umask 077 && age-keygen -o "$key" 2>/dev/null); }
+  mkdir -p ~/.local/share/secrets && chmod 700 ~/.local/share/secrets
+}
+secret-set() {
+  if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: secret-set <name> <value>"; return 1
+  fi
+  _secret_init
+  printf '%s' "$2" | age -e -i ~/.config/age/secrets.key -o ~/.local/share/secrets/"$1".age &&
+    echo "✓ Secret '$1' stored"
+}
+secret-get() {
+  if [ -z "$1" ]; then echo "Usage: secret-get <name>"; return 1; fi
+  [ -f ~/.local/share/secrets/"$1".age ] || return 1
+  age -d -i ~/.config/age/secrets.key ~/.local/share/secrets/"$1".age 2>/dev/null
+}
+secret-delete() {
+  if [ -z "$1" ]; then echo "Usage: secret-delete <name>"; return 1; fi
+  rm -f ~/.local/share/secrets/"$1".age && echo "✓ Secret '$1' deleted"
+}
+
+fi
 
 # Export a secret as an environment variable
 secret-export() {

@@ -1,3 +1,4 @@
+{{- if lookPath "vim" -}}
 #!/bin/bash
 
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
@@ -9,3 +10,4 @@ fi
 
 echo "Installing Vim plugins..."
 vim +PluginInstall +qall
+{{ end -}}

@@ -511,10 +511,15 @@ ecrlogin() {
   eval "aws ecr get-login-password  | docker login --username AWS --password-stdin $1"
 }
 
-source <(kubectl completion zsh)
+if command -v kubectl &>/dev/null; then
+  source <(kubectl completion zsh)
 
-complete -F __start_kubectl k
-complete -F __start_kubectl ksys
-complete -F __start_kubectl kgpo
-complete -F __start_kubectl ksysgpo
-complete -F __start_kubectl kkrew
+  # `complete` only exists after bashcompinit; zsh completes aliases natively
+  if whence complete &>/dev/null; then
+    complete -F __start_kubectl k
+    complete -F __start_kubectl ksys
+    complete -F __start_kubectl kgpo
+    complete -F __start_kubectl ksysgpo
+    complete -F __start_kubectl kkrew
+  fi
+fi

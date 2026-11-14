@@ -1,0 +1,85 @@
+{{- if eq .pkgmgr "apt" -}}
+#!/bin/bash
+# Debian/Ubuntu counterpart of run_onchange_brew-packages.sh.tmpl.
+# Runs on every apply (cheap dpkg check) so a skipped install is retried next time.
+# Never prompts: uses sudo only if `sudo -n true` works, otherwise prints what to run.
+# Tools absent or stale in apt live in the linux block of dot_config/mise/config.toml.tmpl.
+# Rationale for every mapping / omission: PORTABILITY.md at the repo root.
+set -euo pipefail
+
+PACKAGES=(
+  # shell + editor (macOS ships zsh/vim; brew has no entry for them)
+  zsh vim fzf curl unzip dnsutils libwww-perl
+  # build deps for mise cargo:/go: backends and native extensions
+  build-essential pkg-config libssl-dev
+  # Brewfile formulas with a direct apt equivalent
+  adr-tools age gnupg gnutls-bin atuin awscli bat cmake cookiecutter cosign
+  python3-cryptography direnv python3-docutils libimage-exiftool-perl eza
+  fd-find ffmpeg fswatch git git-crypt git-delta git-filter-repo git-secrets
+  glow htop hub jq just kubectl postgresql-client make miller pandoc pipx
+  pre-commit ripgrep shellcheck shfmt starship thefuck tree universal-ctags
+  virtualenv wget zoxide sshpass openvpn
+{{- if not .headless }}
+  # desktop-only
+  git-gui
+{{- end }}
+)
+
+can_sudo() { [ "$(id -u)" -eq 0 ] || sudo -n true 2>/dev/null; }
+SUDO=""; [ "$(id -u)" -eq 0 ] || SUDO="sudo"
+need_sudo=()
+
+missing=()
+for p in "${PACKAGES[@]}"; do
+  dpkg-query -W -f='${Status}' "$p" 2>/dev/null | grep -q "install ok installed" || missing+=("$p")
+done
+if [ ${#missing[@]} -gt 0 ]; then
+  if can_sudo; then
+    echo "apt: installing ${#missing[@]} package(s): ${missing[*]}"
+    $SUDO apt-get update -qq
+    $SUDO env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+  else
+    need_sudo+=("${#missing[@]} apt package(s) missing: ${missing[*]}")
+  fi
+fi
+
+# Debian renames these binaries; restore the brew names so aliases/scripts match macOS.
+mkdir -p "$HOME/.local/bin"
+for pair in bat:batcat fd:fdfind; do
+  name=${pair%%:*}; real=/usr/bin/${pair#*:}
+  if [ -x "$real" ] && [ "$(readlink "$HOME/.local/bin/$name" 2>/dev/null)" != "$real" ]; then
+    ln -sfn "$real" "$HOME/.local/bin/$name"
+  fi
+done
+
+# zsh as login shell (macOS default). ~/.zshenv keeps `ssh host cmd` PATH identical to ~/.bashrc line 1.
+zsh_path=/usr/bin/zsh
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$zsh_path" ]; then
+  if [ ! -x "$zsh_path" ]; then
+    : # zsh not installed yet; reported above
+  elif can_sudo; then
+    echo "Setting login shell to $zsh_path"
+    $SUDO chsh -s "$zsh_path" "$USER"
+  else
+    need_sudo+=("login shell is not zsh")
+  fi
+fi
+
+# Guard for `ssh host <cmd>` (vault-host workflows): a non-interactive zsh must find
+# the same tools ~/.bashrc line 1 provides. ~/.zshenv is applied after this script on a
+# first run, so only check once it exists.
+if [ -x "$zsh_path" ] && [ -f "$HOME/.zshenv" ]; then
+  if ! env -i HOME="$HOME" USER="$USER" PATH=/usr/bin:/bin "$zsh_path" -c 'command -v mise >/dev/null && command -v claude >/dev/null'; then
+    echo "⚠ chezmoi: non-interactive zsh can't find mise/claude; check ~/.zshenv PATH (ssh host <cmd> would break)"
+  fi
+fi
+
+if [ ${#need_sudo[@]} -gt 0 ]; then
+  echo "⚠ chezmoi: skipped steps that need sudo (no password prompts during apply):"
+  printf '    - %s\n' "${need_sudo[@]}"
+  echo "  To finish, run:  sudo -v && chezmoi apply"
+fi
+{{- else if ne .chezmoi.os "darwin" -}}
+#!/bin/sh
+echo "chezmoi: no OS package step for {{ .chezmoi.os }}/{{ index (.chezmoi.osRelease | default dict) "id" | default "unknown" }}; install packages manually (see PORTABILITY.md)."
+{{- end }}
