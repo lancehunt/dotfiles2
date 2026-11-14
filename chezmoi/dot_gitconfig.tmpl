@@ -191,10 +191,10 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 	name = Lance Hunt
 	email = lancehunt@gmail.com
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gh{{ else }}{{ .chezmoi.homeDir }}/.local/share/mise/shims/gh{{ end }} auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gh{{ else }}{{ .chezmoi.homeDir }}/.local/share/mise/shims/gh{{ end }} auth git-credential
 	email = lancehunt@gmail.com
 [merge "json"]
