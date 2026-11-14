@@ -198,3 +198,9 @@ and never deletes unmanaged files there.
 - Nothing ran on macOS. Lance to check: `chezmoi init && chezmoi diff` on the Mac should show only intended changes.
 - apt step and `chsh` pending Lance's sudo: `sudo -v && chezmoi apply`.
 - `pre-commit run --all-files` not run (pre-commit arrives with the apt step).
+- `update` alias (Linux) ends with `chezmoi update`, which needs the checked-out branch to track a remote.
+  On vault-host, after pushing from the Mac: `git -C ~/.local/share/chezmoi branch -u origin/linux-portability`
+  (or switch to `main` once merged). This host can't pull private repos; dotfiles2 is public, so pulls work.
+- terminfo: xterm-256color, wezterm and alacritty are present. `xterm-ghostty`/`xterm-kitty` are not; if you ever ssh
+  from Ghostty or kitty, run `infocmp -x | ssh vault-host tic -x -` once from that terminal.
+- Repo pre-commit hooks pass on this branch (ran on vault-host 2026-11-14).
