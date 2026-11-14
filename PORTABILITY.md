@@ -20,6 +20,16 @@ After pulling this branch on an existing machine, run **`chezmoi init`** once to
 also carries over the iTerm2 `plutil` pre-add hook (previously the repo-root `chezmoi.toml`, which
 chezmoi never read automatically. That file can be deleted once the Mac uses the template).
 
+## Mac rollout
+
+1. `cd ~/.local/share/chezmoi && git fetch && git switch linux-portability` (after pushing it from wherever it was committed)
+2. `chezmoi init`: regenerates `~/.config/chezmoi/chezmoi.toml` from `.chezmoi.toml.tmpl` (`headless=false`,
+   `pkgmgr="brew"`, umask, plutil pre-add hook). Scripts read the data with `get`, so an apply before this
+   step doesn't fail: the OS package script just renders empty.
+3. `chezmoi diff`: expect only intended changes (gitconfig template output, iTerm2 script guard, shell-file
+   guards, mise config identical). The changed mise scripts will run once (`mise install`; the mise bootstrap skips because mise is present).
+4. Review, then `chezmoi apply`.
+
 ## How the split works
 
 | Mechanism | Where | Purpose |

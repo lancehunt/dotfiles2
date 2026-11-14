@@ -1,4 +1,4 @@
-{{- if eq .pkgmgr "apt" -}}
+{{- if eq (get . "pkgmgr") "apt" -}}
 #!/bin/bash
 # Debian/Ubuntu counterpart of run_onchange_brew-packages.sh.tmpl.
 # Runs on every apply (cheap dpkg check) so a skipped install is retried next time.
@@ -19,7 +19,7 @@ PACKAGES=(
   glow htop hub jq just kubectl postgresql-client make miller pandoc pipx
   pre-commit ripgrep shellcheck shfmt starship thefuck tree universal-ctags
   virtualenv wget zoxide sshpass openvpn
-{{- if not .headless }}
+{{- if not (get . "headless") }}
   # desktop-only
   git-gui
 {{- end }}
