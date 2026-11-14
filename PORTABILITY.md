@@ -94,6 +94,7 @@ When adding a tool to the Brewfile, also add it to one of those two (or note why
 - `dot_zprofile`: pyenv shim juggling only if `pyenv` exists.
 - `dot_zshenv`: on Linux prepend `~/.local/bin` and mise shims to PATH. zsh never reads
   `~/.profile`, where Debian/cloud-init put those. *Candidate for macOS too.*
+  Also maps `LC_CTYPE=UTF-8` (sent by macOS ssh clients; invalid on Linux, so perl/apt warn) to `C.UTF-8`.
 - `dot_aliases`:
   - Wrapped in darwin guards: `update`, `ip`/`localip`/`ips`, `flush`, `lscleanup`, `sniff`,
     `httpdump`, `emptytrash`, `show`/`hide`, `hidedesktop`/`showdesktop`, `spotoff`/`spoton`,
