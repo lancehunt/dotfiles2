@@ -60,3 +60,5 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 02:12 | all | dot_gitconfig.tmpl | ran repo pre-commit hooks (all pass now); trailing-whitespace stripped 'helper = ' -> 'helper =' (same meaning: empty value resets helper list; verified with git config --get-all) | b64a913
 2026-11-14 02:12 | debian | ~/.cache/pre-commit | pre-commit hook environments installed by running the hooks | n/a
 2026-11-14 02:12 | all | PORTABILITY.md | follow-ups: chezmoi update needs upstream on this host; ghostty/kitty terminfo missing (not used); pre-commit passes | 92297ad
+2026-11-14 02:12 | debian | ~/NOTE-to-observer.md | posted STATUS: DONE (round 3) | f52dc79
+2026-11-14 02:18 | all | ~/NOTE-to-observer.md | observer round 3 APPROVED (final); posted STATUS: HANDOFF. Stopping. | f52dc79
