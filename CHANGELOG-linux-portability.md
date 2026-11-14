@@ -55,3 +55,4 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 02:03 | debian | ~/NOTE-to-observer.md | posted post-sudo update | 1b1beb6
 2026-11-14 02:07 | all | n/a | observer review round 2: APPROVED; loop closed. Idle. | 1b1beb6
 2026-11-14 02:09 | debian | dot_config/starship.toml (new), .chezmoiignore, PORTABILITY.md; applied ~/.config/starship.toml | always show hostname as orange badge on Linux (Lance asked; he ssh'd vault-host->vault-host by mistake). darwin ignores the file, so its prompt is unchanged | da0184c
+2026-11-14 02:11 | debian | dot_zshenv, PORTABILITY.md; applied ~/.zshenv | Linux: LC_CTYPE=UTF-8 from macOS ssh clients -> C.UTF-8 (perl 'Setting locale failed' warnings); valid locales untouched (round 3, Lance asked to resume refining) | 59f38cf

@@ -1,5 +1,6 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
+# Re-run when the Brewfile changes. Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
 
 # Ask for sudo upfront and keep it alive for the duration of the script
 sudo -v

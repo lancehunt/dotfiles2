@@ -28,6 +28,8 @@ chezmoi never read automatically. That file can be deleted once the Mac uses the
    step doesn't fail: the OS package script just renders empty.
 3. `chezmoi diff`: expect only intended changes (gitconfig template output, iTerm2 script guard, shell-file
    guards, mise config identical). The changed mise scripts will run once (`mise install`; the mise bootstrap skips because mise is present).
+   The brew script now embeds a Brewfile hash, so it also runs once (`sudo -v` prompt and `brew bundle --no-upgrade`,
+   mostly a no-op) and from then on whenever the Brewfile changes. Before this, Brewfile edits never triggered it.
 4. Review, then `chezmoi apply`.
 
 ## How the split works
