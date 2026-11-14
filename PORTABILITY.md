@@ -127,7 +127,7 @@ direnv python3-docutils libimage-exiftool-perl eza fd-find ffmpeg fswatch git gi
 git-filter-repo git-secrets glow htop hub jq just kubectl postgresql-client make miller pandoc
 pipx pre-commit ripgrep shellcheck shfmt starship thefuck tree universal-ctags virtualenv wget
 zoxide sshpass openvpn`, plus things macOS ships but Debian doesn't: `zsh vim fzf curl unzip
-dnsutils libwww-perl build-essential pkg-config libssl-dev`.
+bind9-dnsutils libwww-perl build-essential pkg-config libssl-dev`. (`dnsutils` is only a virtual name in trixie, so a dpkg-query check never sees it as installed.)
 
 Name differences: `gnutls`→`gnutls-bin`, `cryptography`→`python3-cryptography`,
 `docutils`→`python3-docutils`, `exiftool`→`libimage-exiftool-perl`, `fd`→`fd-find` (binary `fdfind`),

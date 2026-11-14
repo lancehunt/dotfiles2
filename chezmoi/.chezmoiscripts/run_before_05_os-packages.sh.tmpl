@@ -9,7 +9,7 @@ set -euo pipefail
 
 PACKAGES=(
   # shell + editor (macOS ships zsh/vim; brew has no entry for them)
-  zsh vim fzf curl unzip dnsutils libwww-perl
+  zsh vim fzf curl unzip bind9-dnsutils libwww-perl
   # build deps for mise cargo:/go: backends and native extensions
   build-essential pkg-config libssl-dev
   # Brewfile formulas with a direct apt equivalent
