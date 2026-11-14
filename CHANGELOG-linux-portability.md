@@ -58,3 +58,5 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 02:11 | debian | dot_zshenv, PORTABILITY.md; applied ~/.zshenv | Linux: LC_CTYPE=UTF-8 from macOS ssh clients -> C.UTF-8 (perl 'Setting locale failed' warnings); valid locales untouched (round 3, Lance asked to resume refining) | 59f38cf
 2026-11-14 02:11 | darwin | .chezmoiscripts/run_onchange_brew-packages.sh.tmpl, PORTABILITY.md | embed Brewfile sha256 so Brewfile edits trigger brew bundle on apply (previously never); Mac will run it once more on rollout; linux render still empty (round 3) | bc02c55
 2026-11-14 02:12 | all | dot_gitconfig.tmpl | ran repo pre-commit hooks (all pass now); trailing-whitespace stripped 'helper = ' -> 'helper =' (same meaning: empty value resets helper list; verified with git config --get-all) | b64a913
+2026-11-14 02:12 | debian | ~/.cache/pre-commit | pre-commit hook environments installed by running the hooks | n/a
+2026-11-14 02:12 | all | PORTABILITY.md | follow-ups: chezmoi update needs upstream on this host; ghostty/kitty terminfo missing (not used); pre-commit passes | 92297ad
