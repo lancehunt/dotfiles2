@@ -54,3 +54,4 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 02:03 | debian | verification | real zsh: login start clean in ~0.4s; ssh-style `zsh -c` finds claude/mise/node/gh; thefuck OK on py3.13; secrets round-trip OK; cat=bat, less=moor, git pager=delta, `ip` not shadowed; vault timers green; apply x2 exit 0 and silent | n/a
 2026-11-14 02:03 | debian | ~/NOTE-to-observer.md | posted post-sudo update | 1b1beb6
 2026-11-14 02:07 | all | n/a | observer review round 2: APPROVED; loop closed. Idle. | 1b1beb6
+2026-11-14 02:09 | debian | dot_config/starship.toml (new), .chezmoiignore, PORTABILITY.md; applied ~/.config/starship.toml | always show hostname as orange badge on Linux (Lance asked; he ssh'd vault-host->vault-host by mistake). darwin ignores the file, so its prompt is unchanged | da0184c
