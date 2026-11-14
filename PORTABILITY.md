@@ -61,6 +61,10 @@ When adding a tool to the Brewfile, also add it to one of those two (or note why
   and `chsh`es to zsh. Adds `git-gui` only when not headless. On unknown Linux distros it prints a
   "no OS package step" message instead.
 
+- `chezmoi/dot_config/starship.toml` (Linux only; ignored on darwin via `.chezmoiignore`): hostname always
+  shown as an orange badge (`ssh_only = false`), so a server prompt can't be mistaken for the Mac. Prompted by
+  Lance running `ssh vault-host` *on* vault-host. The Mac keeps starship defaults (no config file).
+
 ### Changed (both OSes)
 - `run_once_after_install-iterm2-settings.sh.tmpl`: **bug fix**: was not darwin-guarded
   (would run `defaults write` on Linux). Now wrapped in a darwin guard.

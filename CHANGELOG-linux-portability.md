@@ -52,3 +52,5 @@ Entries up to 01:56 were backfilled from the session (times approximate).
 2026-11-14 02:03 | debian | ~/.config/age/secrets.key, ~/.local/share/secrets/ | created by secret-set/get/delete round-trip test (test secret deleted; key kept, 0600; would be created on first real use anyway) | n/a
 2026-11-14 02:03 | debian | run_before_05_os-packages.sh.tmpl, PORTABILITY.md | dnsutils -> bind9-dnsutils: virtual name in trixie, so dpkg-query kept reporting it missing and nagging for sudo on every apply | 224805b
 2026-11-14 02:03 | debian | verification | real zsh: login start clean in ~0.4s; ssh-style `zsh -c` finds claude/mise/node/gh; thefuck OK on py3.13; secrets round-trip OK; cat=bat, less=moor, git pager=delta, `ip` not shadowed; vault timers green; apply x2 exit 0 and silent | n/a
+2026-11-14 02:03 | debian | ~/NOTE-to-observer.md | posted post-sudo update | 1b1beb6
+2026-11-14 02:07 | all | n/a | observer review round 2: APPROVED; loop closed. Idle. | 1b1beb6

@@ -10,3 +10,8 @@ Library/**
 .local/bin/macos-snapshot
 .local/bin/update-claude-credentials
 {{ end }}
+
+# Linux-only targets
+{{ if eq .chezmoi.os "darwin" }}
+.config/starship.toml
+{{ end }}
