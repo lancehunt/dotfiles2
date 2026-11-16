@@ -123,7 +123,6 @@ When adding a tool to the Brewfile, also add it to one of those two (or note why
 - `core.excludesfile = ~/.global_gitignore` points at a file the repo doesn't track.
 - `merge "json"` driver needs `git-json-merge` (npm), which isn't installed anywhere.
 - `chezmoi.toml` (repo root) pre-add hook calls `plutil` but only for the iTerm2 plist, so it's harmless on Linux.
-- `dot_zprofile` OrbStack line already fails silently.
 - `.zshrc` `plugins=(git ruby zsh-aws-vault)` is an oh-my-zsh variable; with znap it does nothing.
 
 ## Brewfile → Linux mapping
