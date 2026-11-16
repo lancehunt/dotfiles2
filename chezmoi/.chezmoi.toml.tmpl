@@ -1,0 +1,34 @@
+{{- /*
+  Host-type detection, decided once here and read everywhere else as .headless / .pkgmgr.
+  Regenerate ~/.config/chezmoi/chezmoi.toml after editing: `chezmoi init`.
+
+  headless: false on macOS, or on Linux with an X11/Wayland session installed.
+  pkgmgr:   "brew" (darwin), "apt" (Debian/Ubuntu family), "" (anything else -> OS steps skipped).
+*/ -}}
+{{- $headless := true -}}
+{{- $pkgmgr := "" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $headless = false -}}
+{{-   $pkgmgr = "brew" -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   if or (stat "/usr/share/xsessions") (stat "/usr/share/wayland-sessions") -}}
+{{-     $headless = false -}}
+{{-   end -}}
+{{-   $osr := .chezmoi.osRelease | default dict -}}
+{{-   if or (eq (index $osr "id" | default "") "debian" "ubuntu") (contains "debian" (index $osr "idLike" | default "")) -}}
+{{-     $pkgmgr = "apt" -}}
+{{-   end -}}
+{{- end -}}
+# Deterministic modes regardless of the calling shell (macOS default anyway)
+umask = 0o022
+
+[data]
+    headless = {{ $headless }}
+    pkgmgr = {{ $pkgmgr | quote }}
+{{- if eq .chezmoi.os "darwin" }}
+
+# Convert the iTerm2 plist to XML1 before `chezmoi add` (was the repo-root chezmoi.toml)
+[hooks.add.pre]
+    command = "sh"
+    args = ["-c", "if [ \"$(basename \"$CHEZMOI_SOURCE_FILE\")\" = \"com.googlecode.iterm2.plist\" ]; then plutil -convert xml1 \"$CHEZMOI_SOURCE_FILE\"; fi"]
+{{- end }}

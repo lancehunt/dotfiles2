@@ -1,0 +1,17 @@
+# Targets that only make sense on macOS. See PORTABILITY.md at the repo root.
+{{ if ne .chezmoi.os "darwin" }}
+.Brewfile
+.macos
+.config/iterm2
+.config/iterm2/**
+Library
+Library/**
+.local/bin/macos-diff
+.local/bin/macos-snapshot
+.local/bin/update-claude-credentials
+{{ end }}
+
+# Linux-only targets
+{{ if eq .chezmoi.os "darwin" }}
+.config/starship.toml
+{{ end }}

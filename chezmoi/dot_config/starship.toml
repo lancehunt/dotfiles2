@@ -1,0 +1,9 @@
+# Linux hosts only (excluded on macOS via .chezmoiignore, so the Mac keeps starship defaults).
+# Everything stays default except the hostname: always shown as a bright badge, so a
+# server prompt is never mistaken for the local Mac (or for itself).
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[hostname]
+ssh_only = false
+format = '[ $ssh_symbol$hostname ]($style) '
+style = 'bold fg:black bg:208'

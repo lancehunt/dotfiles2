@@ -1,2 +1,16 @@
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# Linux: zsh doesn't read ~/.profile, so put ~/.local/bin and mise shims on PATH
+# for every zsh (incl. non-interactive `ssh host cmd`). Interactive shells then
+# run `mise activate` in .zshrc, which takes precedence over the shims.
+if [[ "$OSTYPE" == linux* ]]; then
+  typeset -U path
+  path=(~/.local/bin ~/.local/share/mise/shims $path)
+fi
+
+# Linux: macOS ssh clients send LC_CTYPE=UTF-8 (sshd AcceptEnv LC_*), which is not a valid
+# locale on Linux and makes perl/apt/etc. warn "Setting locale failed". Map it to C.UTF-8.
+if [[ "$OSTYPE" == linux* && "$LC_CTYPE" == UTF-8 ]]; then
+  export LC_CTYPE=C.UTF-8
+fi

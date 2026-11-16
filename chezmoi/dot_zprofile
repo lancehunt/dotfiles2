@@ -6,6 +6,9 @@ elif [[ -f "/usr/local/bin/brew" ]]; then
   # Intel Mac path
   eval "$(/usr/local/bin/brew shellenv)"
 fi
+# pyenv shims (macOS/brew only; Linux uses mise-managed python)
+if command -v pyenv &>/dev/null; then
 PATH="$(bash --norc -ec 'IFS=:; paths=($PATH); for i in ${!paths[@]}; do if [[ ${paths[i]} == "'~/.pyenv/shims'" ]]; then unset '\''paths[i]'\''; fi; done; echo "${paths[*]}"')"
 export PATH="~/.pyenv/shims:${PATH}"
 command pyenv rehash 2>/dev/null
+fi

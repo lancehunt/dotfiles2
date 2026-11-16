@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Personal macOS dotfiles managed with [Chezmoi](https://www.chezmoi.io/). Managed dotfiles live under `chezmoi/` and are applied to `$HOME` via chezmoi's naming conventions (`dot_` prefix becomes `.`, `.tmpl` suffix enables Go templating).
+Personal macOS + Debian/Linux (headless) dotfiles managed with [Chezmoi](https://www.chezmoi.io/). Managed dotfiles live under `chezmoi/` and are applied to `$HOME` via chezmoi's naming conventions (`dot_` prefix becomes `.`, `.tmpl` suffix enables Go templating).
 
 ## Key Commands
 
@@ -28,10 +28,13 @@ If you've already made changes without snapshotting first, check the current val
 
 ## Conventions
 
-- `.tmpl` suffix = Go templates, macOS-only scripts guard with `{{ if eq .chezmoi.os "darwin" }}`
+- `.tmpl` suffix = Go templates, macOS-only scripts guard with `{{ if eq .chezmoi.os "darwin" }}`; package steps key on `.pkgmgr`
 - Chezmoi scripts in `chezmoi/.chezmoiscripts/` run in numbered order
 - Shell config loads: `.zshenv` → `.zprofile` → `.zshrc` → `.aliases` → `.functions` → `.aws-profile` → `.kubectl-profile`
 - Brewfile manages all packages (taps, brews, casks, VS Code extensions, MAS apps)
-- `chezmoi.toml` pre-add hook converts iTerm2 plist to XML1
+- `chezmoi/.chezmoi.toml.tmpl` sets host data (`headless`, `pkgmgr`) and, on macOS, the pre-add hook that converts the iTerm2 plist to XML1
 - Pre-commit hooks in `.pre-commit-config.yaml` check formatting + scan for secrets
+- Cross-platform: guard, don't delete. Runtime `[[ "$OSTYPE" == darwin* ]]` / `command -v` guards in shell files;
+  `.chezmoiignore` for macOS-only targets; Linux packages = apt script + linux block of the mise config template.
+  Record every macOS↔Linux deviation in `PORTABILITY.md`
 - Refer to https://www.chezmoi.io/ for chezmoi conventions

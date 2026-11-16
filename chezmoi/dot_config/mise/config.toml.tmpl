@@ -1,0 +1,68 @@
+[tools]
+"github:can1357/oh-my-pi" = "latest"
+node = "24"
+"npm:@sentry/cli" = "latest"
+"npm:ctx7" = "latest"
+"npm:yarn" = "latest"
+python = "3.13"
+uv = "latest"
+zellij = "latest"
+{{- if eq .chezmoi.os "linux" }}
+
+# ---------------------------------------------------------------------------
+# Linux-only: tools that come from Homebrew on macOS but are missing or stale
+# in Debian apt. See PORTABILITY.md at the repo root.
+# ---------------------------------------------------------------------------
+chezmoi = "latest"
+go = "latest"            # apt golang-go lags (1.24); brew tracks latest
+rust = "stable"          # replaces brew rust + rustup
+gh = "latest"            # apt gh is 2.46 (stale)
+gitleaks = "latest"      # apt gitleaks is 8.16 (stale)
+difftastic = "latest"
+hadolint = "latest"
+k9s = "latest"
+sops = "latest"
+stern = "latest"
+tilt = "latest"
+k6 = "latest"
+pnpm = "latest"
+golangci-lint = "latest"
+cargo-binstall = "latest"
+kubecolor = "latest"
+granted = "latest"
+pulumi = "latest"
+bun = "latest"
+snyk = "latest"
+aws-vault = "latest"     # ByteNess fork (maintained successor to 99designs)
+scorecard = "latest"
+terraform = "latest"     # replaces brew tenv/tfenv
+"github:walles/moor" = "latest"
+"github:rtk-ai/rtk" = "latest"
+"github:charmbracelet/pop" = "latest"
+"github:tbillington/kondo" = "latest"   # prebuilt; cargo build needs a C linker
+"cargo:mergiraf" = "latest"
+"cargo:claudelytics" = "latest"
+"pipx:llm" = "latest"
+"pipx:trafilatura" = "latest"
+"pipx:git-remote-codecommit" = "latest"
+"pipx:mitmproxy" = "latest"
+"npm:graphql-cli" = "latest"
+# Brewfile `go` entries (guru + gorename omitted: removed/deprecated in x/tools; use gopls)
+"go:github.com/klauspost/asmfmt/cmd/asmfmt" = "latest"
+"go:github.com/go-delve/delve/cmd/dlv" = "latest"
+"go:github.com/kisielk/errcheck" = "latest"
+"go:github.com/davidrjenni/reftools/cmd/fillstruct" = "latest"
+"go:github.com/chrishrb/go-grip" = "latest"
+"go:github.com/rogpeppe/godef" = "latest"
+"go:golang.org/x/tools/cmd/goimports" = "latest"
+"go:github.com/fatih/gomodifytags" = "latest"
+"go:golang.org/x/tools/gopls" = "latest"
+"go:github.com/jstemmer/gotags" = "latest"
+"go:github.com/koron/iferr" = "latest"
+"go:github.com/josharian/impl" = "latest"
+"go:github.com/grafana/mcp-grafana/cmd/mcp-grafana" = "latest"
+"go:github.com/fatih/motion" = "latest"
+"go:github.com/justjanne/powerline-go" = "latest"
+"go:github.com/mgechev/revive" = "latest"
+"go:honnef.co/go/tools/cmd/staticcheck" = "latest"
+{{- end }}

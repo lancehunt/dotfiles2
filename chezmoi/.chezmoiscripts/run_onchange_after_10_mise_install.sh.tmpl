@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+
+# Re-runs whenever the rendered mise config changes.
+# mise config hash: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
+~/.local/bin/mise install

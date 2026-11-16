@@ -183,17 +183,19 @@ up = "!git remote update -p; git merge --ff-only @{u}"
 [mergetool]
 	keepBackup = false
 [init]
-	templatedir = /Users/lhunt/.git-templates
+{{- if stat (joinPath .chezmoi.homeDir ".git-templates") }}
+	templatedir = {{ .chezmoi.homeDir }}/.git-templates
+{{- end }}
 	defaultBranch = main
 [user]
 	name = Lance Hunt
 	email = lancehunt@gmail.com
 [credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper =
+	helper = !{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gh{{ else }}{{ .chezmoi.homeDir }}/.local/share/mise/shims/gh{{ end }} auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper =
+	helper = !{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/gh{{ else }}{{ .chezmoi.homeDir }}/.local/share/mise/shims/gh{{ end }} auth git-credential
 	email = lancehunt@gmail.com
 [merge "json"]
 	driver = git-json-merge %A %O %B
