@@ -1,0 +1,6 @@
+# slackcli has no Homebrew formula; pull the release binary (used by the tools@kit slackcli skill)
+[".local/bin/slackcli"]
+    type = "file"
+    url = "https://github.com/shaharia-lab/slackcli/releases/latest/download/slackcli-macos{{ if eq .chezmoi.arch "arm64" }}-arm64{{ end }}"
+    executable = true
+    refreshPeriod = "168h"
